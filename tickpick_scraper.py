@@ -1,34 +1,38 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[77]:
-
-
 import requests
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import numpy as np
 import pandas as pd
 import datetime
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 URL_SEARCH = "https://www.tickpick.com/concerts/yeat-tickets/"
 
+options = webdriver.ChromeOptions()
+options.binary_location = '/usr/bin/google-chrome'
+options.add_argument('headless')
+options.add_argument('--no-sandbox')
 
-# In[78]:
-
-
-driver = webdriver.Chrome(r"C:\Users\Paul\Documents\chromedriver.exe")
+driver = webdriver.Chrome(chrome_options=options)
 driver.get(URL_SEARCH)
 
 xpath_links = "//*[@id=\"events\"]/div[*]/a[1]"
 
+links = []
+while len(links) == 0:
+    links = driver.find_elements(by=By.XPATH, value=xpath_links)
+    print(links)
 
-links = driver.find_elements_by_xpath(xpath_links)
-venue_names = driver.find_elements_by_xpath("//*[@id=\"events\"]/div[*]/div[2]/span/span")
-dates = driver.find_elements_by_xpath("//*[@id=\"events\"]/div[*]/div[1]/span[1]")
+venue_names = driver.find_elements(by=By.XPATH, value="//*[@id=\"events\"]/div[*]/div[2]/span/span")
+dates = driver.find_elements(by=By.XPATH, value="//*[@id=\"events\"]/div[*]/div[1]/span[1]")
 
 links = list(map(lambda elem: elem.get_attribute("href"), links))
 venue_names = list(map(lambda elem: elem.text, venue_names))
 dates = list(map(lambda elem: elem.text, dates))
+
+print(links)
+
 
 
 # In[80]:
