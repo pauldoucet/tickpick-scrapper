@@ -1,4 +1,4 @@
-python_script\password.json
-python_script\DigiCertGlobalRootCA.crt.pem
-tickpick_django\tickpick_django\settings.py
-tickpick_django\DigiCertGlobalRootCA.crt.pem
+python_script/password.json
+python_script/DigiCertGlobalRootCA.crt.pem
+tickpick_django/settings.py
+tickpick_django/DigiCertGlobalRootCA.crt.pem
