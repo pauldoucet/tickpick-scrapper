@@ -1,1 +1,0 @@
-# tickpick-scrapper
