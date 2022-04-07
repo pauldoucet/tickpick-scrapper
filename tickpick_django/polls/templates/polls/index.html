@@ -2,17 +2,61 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>My test page</title>
+    <title>TickPick Scraper</title>
+    {% load static %}
+    <link rel="icon"href="{% static 'img/favicon.ico' %}">
   </head>
-  <body>
-    {% if latest_question_list %}
-		<ul>
-		{% for question in latest_question_list %}
-			<li><a href="/polls/{{ question.id }}/">{{ question }}</a></li>
-		{% endfor %}
-		</ul>
-	{% else %}
-		<p>No polls are available.</p>
-	{% endif %}
+  <body style="margin: 0px">
+  	<div id="nav" style="background-color: #696969; padding: 10px; box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);">
+  		<img src="{% static 'img/favicon.ico' %}" alt="" style="width: 25px">
+  	</div>
+  	<div id="container" style="width: 75%; margin-left: auto; margin-right: auto; margin-top: 20px;">
+    	<canvas id="price-chart"></canvas>
+  	</div>
   </body>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+    var config = {
+      type: 'line',
+      data: {
+        datasets: [{
+          data: {{ data|safe}},
+          backgroundColor: [
+            '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
+          ],
+          label: 'Warsaw - Brooklyn, NY'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Price Evolution'
+        },
+        scales: {
+    			yAxes: [{
+      			scaleLabel: {
+        			display: true,
+        			labelString: 'Price ($)'
+      			}
+    			}],
+    			xAxes: [{
+    				scaleLabel: {
+    					display: true,
+    					labelString: 'Date'
+    				}
+    			}]
+  			}
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('price-chart').getContext('2d');
+      window.myChart = new Chart(ctx, config);
+    };
+
+  </script>
+
 </html>
