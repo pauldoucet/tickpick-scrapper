@@ -10,40 +10,45 @@ import urllib
 from sqlalchemy import create_engine
 from selenium_stealth import stealth
 import pymysql
+import undetected_chromedriver as uc
+from sqlalchemy.engine.url import URL
 
 
 URL_SEARCH = "https://www.tickpick.com/concerts/yeat-tickets/"
 
-options = webdriver.ChromeOptions()
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument("--disable-gpu")
-options.add_argument("--window-size=1280x1696")
-options.add_argument("--single-process")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--disable-dev-tools")
-options.add_argument("--no-zygote")
-options.add_argument(f"--user-data-dir={mkdtemp()}")
-options.add_argument(f"--data-path={mkdtemp()}")
-options.add_argument(f"--disk-cache-dir={mkdtemp()}")
-options.add_argument("--remote-debugging-port=9222")
+options = uc.ChromeOptions()
+#options.add_argument('--headless')
+# options.add_argument('--no-sandbox')
+# options.add_argument("--disable-gpu")
+# options.add_argument("--window-size=1280x1696")
+# options.add_argument("--single-process")
+# options.add_argument("--disable-dev-shm-usage")
+# options.add_argument("--disable-dev-tools")
+# options.add_argument("--no-zygote")
+# options.add_argument(f"--user-data-dir={mkdtemp()}")
+# options.add_argument(f"--data-path={mkdtemp()}")
+# options.add_argument(f"--disk-cache-dir={mkdtemp()}")
+# options.add_argument("--remote-debugging-port=9222")
 
-driver = webdriver.Chrome(r"C:\Users\Paul\Documents\chromedriver.exe", options=options)
+#driver = webdriver.Chrome(r"C:\Users\Paul\Documents\chromedriver.exe", options=options)
+driver = uc.Chrome(options=options)
 
-stealth(driver,
-    languages=["en-US", "en"],
-    vendor="Google Inc.",
-    platform="Win32",
-    webgl_vendor="Intel Inc.",
-    renderer="Intel Iris OpenGL Engine",
-    fix_hairline=True,
-    )
+# stealth(driver,
+#     languages=["en-US", "en"],
+#     vendor="Google Inc.",
+#     platform="Win32",
+#     webgl_vendor="Intel Inc.",
+#     renderer="Intel Iris OpenGL Engine",
+#     fix_hairline=True,
+#     )
 
 driver.get(URL_SEARCH)
 
 xpath_links = "//*[@id=\"events\"]/div[*]/a[1]"
 
-links = driver.find_elements_by_xpath(xpath_links)
+links = []
+while(not(links)):
+    links = driver.find_elements_by_xpath(xpath_links)
 
 venue_names = driver.find_elements_by_xpath("//*[@id=\"events\"]/div[*]/div[2]/span/span")
 dates = driver.find_elements_by_xpath("//*[@id=\"events\"]/div[*]/div[1]/span[1]")
@@ -68,13 +73,17 @@ def add_page_to_row_list(link, row_list, driver, venue_name, date, time):
         dic["VenueID"] = venue_name
         dic["DateEvent"] = date
         dic["Quantity"] = elem.find_element_by_tag_name("select").text.split()[0]
-        dic["Price"] = elem.find_element_by_tag_name("b").text[1:]
+        
+        price = ""
+        while len(price) == 0:
+            price = elem.find_element_by_tag_name("b").text
+        dic["Price"] = price[1:]
         row_list.append(dic)
 
 row_list = []
 
 date = datetime.datetime.now()
-time = date.strftime("%m.%d.%y_%H.%M")
+time = date.strftime("%b %d %I:%M%p")
 
 for i in range(len(links)):
     print(links[i])

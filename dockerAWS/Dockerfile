@@ -8,9 +8,9 @@ RUN yum install -y unzip && \
 FROM public.ecr.aws/lambda/python@sha256:30f4b8ccdd8321fb9b22f0f32e688c225044497b1a4e82b53d3554efd452bab3
 RUN yum install atk cups-libs gtk3 libXcomposite alsa-lib \
     libXcursor libXdamage libXext libXi libXrandr libXScrnSaver \
-    libXtst pango at-spi2-atk libXt xorg-x11-server-Xvfb \
+    libXtst pango at-spi2-atk libXt xorg-x11-server-Xvfb xserver-xephyr \
     xorg-x11-xauth dbus-glib dbus-glib-devel -y
-RUN pip install selenium pandas numpy sqlalchemy undetected_chromedriver selenium_stealth
+RUN pip install selenium pandas numpy sqlalchemy undetected_chromedriver selenium_stealth pymysql pyvirtualdisplay
 COPY --from=build /opt/chrome-linux /opt/chrome
 COPY --from=build /opt/chromedriver /opt/
 COPY test.py ./
