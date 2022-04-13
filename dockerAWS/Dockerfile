@@ -10,8 +10,8 @@ RUN yum install atk cups-libs gtk3 libXcomposite alsa-lib \
     libXcursor libXdamage libXext libXi libXrandr libXScrnSaver \
     libXtst pango git at-spi2-atk libXt xorg-x11-server-Xvfb xserver-xephyr \
     xorg-x11-xauth dbus-glib dbus-glib-devel -y
-RUN pip install selenium pandas numpy sqlalchemy selenium_stealth pymysql pyvirtualdisplay undetected-chromedriver
-#RUN pip install -e git+https://github.com/pauldoucet/undetected-chromedriver.git@change_path#egg=undetected-chromedriver
+RUN pip install selenium pandas numpy sqlalchemy pymysql pyvirtualdisplay requests beautifulsoup4
+RUN pip install -e git+https://github.com/pauldoucet/undetected-chromedriver.git@change_path#egg=undetected-chromedriver
 COPY --from=build /opt/chrome-linux /opt/chrome
 COPY --from=build /opt/chromedriver /opt/
 COPY test.py ./
