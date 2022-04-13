@@ -3,10 +3,17 @@ from django.template import loader
 from django.shortcuts import render
 from django.db.models import Avg, Max, Min
 
-from .models import TestTable   
+from .models import TestTable, TweetTable
 
 def index(request):
     template = loader.get_template('polls/index.html')
+
+    tweets_id = TweetTable.objects.distinct()
+    id_list = []
+
+    for object in tweets_id:
+        id_list.append(object.id)
+
 
     venue_tuples = TestTable.objects.values_list('venueid').distinct()
 
@@ -24,6 +31,7 @@ def index(request):
         'venue_list': list(venue_list),
         'labels': list(dic.keys()),
         'data': list(dic.values()),
+        'tweet_ids': list(id_list)
     }
 
     return render(request, 'polls/index.html', context)
@@ -33,6 +41,7 @@ def venue_data(request, venue_index):
     template = loader.get_template('polls/index.html')
 
     venue_tuples = TestTable.objects.values_list('venueid').distinct()
+
 
     venue_list = []
     for venue in venue_tuples:

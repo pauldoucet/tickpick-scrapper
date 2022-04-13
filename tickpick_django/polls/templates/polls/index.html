@@ -29,6 +29,13 @@
 
   	<div id="container" style="width: 70%;margin-left: auto; margin-right: auto; margin-top: 20px">
     	<canvas id="price-chart" data-url="{% url 'venue-data' 1 %}"></canvas>
+    	{% for id in tweet_ids %}
+    	<blockquote class="twitter-tweet">
+    		<a href="https://twitter.com/x/status/{{ id }}"></a>
+    	</blockquote>
+    	{% endfor %}
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
   	</div>
 
   	<div style="margin-left: auto; margin-right: auto; width: 200px">

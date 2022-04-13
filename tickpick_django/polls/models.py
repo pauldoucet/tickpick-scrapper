@@ -13,3 +13,12 @@ class TestTable(models.Model):
 
     class Meta:
         db_table = 'test_table'
+
+class TweetTable(models.Model):
+    id = models.TextField(db_column='id', blank=True, primary_key=True)
+
+    def __str__(self):
+        return self.id
+
+    class Meta:
+        db_table = 'tweet_table'
