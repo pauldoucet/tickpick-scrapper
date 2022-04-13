@@ -19,26 +19,38 @@
 		<!-- (Optional) Latest compiled and minified JavaScript translation files -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/i18n/defaults-*.min.js"></script>
 
+		<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
   </head>
 
   <body style="margin: 0px">
 
-  	<div id="nav" style="background-color: #696969; padding: 10px; box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);">
+  	<div id="nav" class= "navbar">
   		<img src="{% static 'img/favicon.ico' %}" alt="" style="width: 25px">
   	</div>
 
-  	<div id="container" style="width: 70%;margin-left: auto; margin-right: auto; margin-top: 20px">
-    	<canvas id="price-chart" data-url="{% url 'venue-data' 1 %}"></canvas>
-    	{% for id in tweet_ids %}
-    	<blockquote class="twitter-tweet">
-    		<a href="https://twitter.com/x/status/{{ id }}"></a>
-    	</blockquote>
-    	{% endfor %}
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+  	<div id="container" class="main-container">
+  		<div style="width: 800px">
+    		<canvas id="price-chart" data-url="{% url 'venue-data' 1 %}"></canvas>
+    	</div>
+
+    	<div class="tweet-box">
+    		<div class="tweet-box-header">
+    			Recent Tweets
+    		</div>
+    		<div class="tweets">
+		    	{% for id in tweet_ids %}
+		    	<blockquote class="twitter-tweet">
+		    		<a href="https://twitter.com/x/status/{{ id }}"></a>
+		    	</blockquote>
+		    	{% endfor %}
+		    </div>
+    	</div>
+			<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
 
   	</div>
 
-  	<div style="margin-left: auto; margin-right: auto; width: 200px">
+  	<div class="venue-selector">
 	  	<select class="custom-select" id="venue_selector">
 	  		<option selected>Select Venues</option>
 	  		{% for venue in venue_list %}

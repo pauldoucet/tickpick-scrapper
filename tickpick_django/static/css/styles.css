@@ -1,0 +1,51 @@
+.navbar {
+	background-color: #696969; 
+	padding: 10px; 
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+}
+
+.tweet-box {
+	height: 400px; 
+	width: 300px;
+	border-style: solid;
+	border-radius: 10px;
+	border-width: 1px;
+	border-color: lightgray;
+	padding: 5px;
+	padding-right: 0px;
+}
+
+.tweets {
+	overflow-y: scroll; 
+	overflow-x:  hidden;
+	height: 90%;
+}
+
+.tweet-box-header {
+	height: 35px;
+	border-radius: 10px;
+	margin-top: -5px;
+	margin-left:  -5px;
+	margin-right:  -2px;
+	background-color: #696969;
+	padding-top: 7px;
+	padding-left: 10px;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size:  14px;
+	color: white;
+	text-align: center;
+}
+
+.venue-selector {
+	margin-left: auto; 
+	margin-right: auto; 
+	width: 200px;
+}
+
+.main-container {
+	display:  flex;
+	justify-content: space-between;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
